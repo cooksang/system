@@ -1,26 +1,22 @@
 CHAPTER 5: 일관성 해싱(Consistent Hashing) 설계
-✅ 수평 확장(Scale-out)을 위해 요청/데이터를 균등하게 분산하는 것이 중요
-✅ 일관성 해싱(Consistent Hashing) 은 이를 효과적으로 해결하는 대표적인 기법
+수평 확장(Scale-out)을 위해 요청/데이터를 균등하게 분산하는 것이 중요
+일관성 해싱(Consistent Hashing) 은 이를 효과적으로 해결하는 대표적인 기법
 
 Rehashing 문제 (서버 추가 시 문제 발생)
-✅ 서버 개수가 변경될 때 기존 키 할당이 거의 모두 변경됨
+서버 개수가 변경될 때 기존 키 할당이 거의 모두 변경됨
 
-📍 서버 추가 후 (N=5) → 키 재배치 문제 발생
+서버 추가 후 (N=5) → 키 재배치 문제 발생
 
 ![image](https://github.com/user-attachments/assets/02dae41d-94be-4b4c-be43-33586de05a04)
 
 서버 4대를 사용하던 환경에서 서버 1대를 추가(N=5) 하면, 기존 해시 값이 변경됨
-
 예를 들어, hash(key0) % 4 = 1 → hash(key0) % 5 = 4 (서버 1 → 서버 4 이동)
-
 거의 모든 키의 서버 할당이 변경됨 → 대량의 데이터 이동 발생
 
-🔴 기존 방식의 문제점
+기존 방식의 문제점
 
 대규모 데이터 마이그레이션 필요 (서버 추가/삭제 시 대부분의 키 이동)
-
 캐시 히트율(Cache Hit Rate) 급감 (캐시 데이터가 무효화됨)
-
 네트워크 부하 증가 (데이터 재배치 작업으로 인한 오버헤드)
 
 ![image](https://github.com/user-attachments/assets/e0d0e621-bbcf-4b7c-a491-cda1aab45f56)
